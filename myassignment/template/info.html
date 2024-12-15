@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Restaurant Info</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="icon"
+      href="https://im1.dineout.co.in/images/uploads/restaurant/sharpen/9/l/s/p9303-1480482994583e60b205abc.jpg?tr=tr:n-medium"
+      type="image/icon type"
+    />
+  </head>
+  <style>
+    /* General styling for the page */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+
+    /* Center alignment for the first two paragraphs */
+
+    /* Style for paragraphs */
+    h3 {
+      text-align: center;
+    }
+    /* Table container for responsiveness */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Table header styling */
+    th {
+      background-color: white;
+      color: black;
+      text-align: left;
+      padding: 10px;
+      font-size: 1em;
+      border: 1px solid #ddd;
+    }
+
+    /* Table row and cell styling */
+    tr: 1st-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    tr {
+      border: 1px solid #ddd;
+    }
+
+    td {
+      padding: 10px;
+      text-align: left;
+      border: 1px solid #ddd;
+    }
+
+    /* Add hover effect for table rows */
+    tr:hover {
+      background-color: #e6f7ff;
+    }
+
+    p {
+      font-size: 0.8 rem;
+    }
+
+    /* Style for links, if any */
+    a {
+      color: rgb(35, 148, 4);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* Styling for the menu list */
+    h2 {
+      color: rgb(35, 148, 4);
+    }
+    h1 {
+      color: rgb(35, 148, 4);
+      text-align: center;
+    }
+
+    /* Two-column layout with a vertical divider */
+    .menu-container {
+      display: flex;
+      justify-content: space-between;
+      border-left: 2px solid #ddd;
+      border-right: 2px solid #ddd;
+    }
+
+    .menu-column {
+      width: 50%;
+      padding: 2px;
+    }
+
+    .menu-column ul {
+      margin: 0;
+      padding: 0;
+      list-style-type: none;
+    }
+
+    .menu-column li {
+      margin: 5px 0;
+      padding: 5px;
+      background-color: #f2f2f2;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      width: 40%;
+    }
+
+    hr {
+      border: 0;
+      height: 1px;
+      background-color: #ddd;
+      margin: 2px 0;
+    }
+  </style>
+  <body>
+    {% block content %}
+    <h1>{{village.name}}</h1>
+    <h3>Address : {{village.location.address1}}</h3>
+    <h2>Village Timings</h2>
+    <table>
+      <tr>
+        <th>Day</th>
+        <th>Times</th>
+        {% comment %}
+        <th>end</th>
+        {% endcomment %}
+        <th>Is overnight</th>
+      </tr>
+      {% for n in village.business_hours.0.open %}
+      <tr>
+        {% if n.day == 0 %}
+        <td>Monday</td>
+        {% elif n.day == 1 %}
+        <td>Tuesday</td>
+        {% elif n.day == 2 %}
+        <td>Wednesday</td>
+        {% elif n.day == 3 %}
+        <td>Thursday</td>
+        {% elif n.day == 4 %}
+        <td>Friday</td>
+        {% elif n.day == 5 %}
+        <td>Saturday</td>
+        {% elif n.day == 6 %}
+        <td>Sunday</td>
+        {% endif %}
+        <td>{{n.start}} - {{n.end}}</td>
+        {% comment %}
+        <td>{{n.end}}</td>
+        {% endcomment %}
+        <td>{{n.is_overnight}}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    <br />
+    <br />
+    <hr />
+    <br />
+    <div class="content">
+      <h2>Similar Restaurants</h2>
+      <table>
+        <tr>
+          <th>Sr. No.</th>
+          <th>Name</th>
+          <th>Address</th>
+          <th>Opening Time</th>
+          <th>Menu</th>
+          <th>Ratings</th>
+        </tr>
+        {% for n in restaurants.businesses%}
+        <tr>
+          <td>{{forloop.counter}}</td>
+          {% if n.name %}
+          <td>{{n.name}}</td>
+          {% else %}
+          <td>-</td>
+          {% endif %} {% if n.location.address1 %}
+          <td>{{n.location.address1}}</td>
+          {% else %}
+          <td>-</td>
+          {% endif %} {% if n.business_hours.0.open.0.start %}
+          <td>{{n.business_hours.0.open.0.start}}</td>
+          {% else %}
+          <td>-</td>
+          {% endif %} {% if n.attributes.menu_url %}
+          <td>{{n.attributes.menu_url}}</td>
+          {% else %}
+          <td>-</td>
+          {% endif %} {% if n.rating %}
+          <td>{{n.rating}}</td>
+          {% else %}
+          <td>-</td>
+          {% endif %}
+        </tr>
+        {% endfor%}
+      </table>
+      <br />
+      <h2>Weather</h2>
+      <p>{{weather.weather}}</p>
+      <p><b>Temperature</b> : {{weather.temp}}</p>
+      <p><b>Minimum Temperature</b> : {{weather.tempMin}}</p>
+      <p><b>Maximum Temperature</b> : {{weather.tempMax}}</p>
+      <div class="container">
+        <h2>Menu</h2>
+        <hr />
+        {% for n in predictions %} {% for key, value in n.items %}
+        <p><strong>{{ key }}</strong> - ${{ value|floatformat:2 }}</p>
+        {% endfor %} {% endfor %}
+      </div>
+    </div>
+    {% endblock content %}
+  </body>
+</html>
