@@ -5,10 +5,6 @@ from bs4 import BeautifulSoup
 import json
 from itertools import zip_longest
 
-YELP_API_KEY = "h0Z_ZCCsCe8Fh5-pv3yYCSHYYMdKo6ZsPhtCMzUuRtjSn06lL2WsOLFo1XpsKPlFYOAXXEtc7G-8uYc7AqgbvRubHbUZCYsidlvMmfu2UUuFAIX7F88K__4rbxtYZ3Yx"
-GMAPS_API_KEY = "AIzaSyDnjFndKCwqp4O7lVkZhZX2ZWLBccYdbCw"
-OPENWEATHER_API_KEY = "a298bf5425460a360b29801690c61885"
-
 
 def get_yelp_data():
     # Fetch Village restaurant details
